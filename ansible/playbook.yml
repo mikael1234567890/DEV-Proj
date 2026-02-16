@@ -1,0 +1,18 @@
+- name: Local DevOps Deployment
+  hosts: localhost
+  become: false
+
+
+  tasks:
+
+    - name: Build Docker image
+      command: docker build -t devops-app:latest -f docker/Dockerfile .
+      args:
+        chdir: /mnt/c/Dev/dev-proj/docker
+
+    - name: Stop old container if exist
+      command: docker rm -f dev-proj-container
+      ignore_errors: true
+
+    - name: Run new container
+      command: docker run -d -p 5000:5000 --name dev-proj-container dev-proj:latest
