@@ -8,7 +8,7 @@
     - name: Build Docker image
       command: docker build -t devops-app:latest -f docker/Dockerfile .
       args:
-        chdir: /mnt/c/Dev/dev-proj/docker
+        chdir: /mnt/c/Dev/dev-proj
 
     - name: Stop old container if exist
       command: docker rm -f dev-proj-container
