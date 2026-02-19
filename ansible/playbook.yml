@@ -15,4 +15,4 @@
       ignore_errors: true
 
     - name: Run new container
-      command: docker run -d -p 5000:5000 --name dev-proj-container dev-proj:latest
+      command: docker run -d -p 5000:5000 --name dev-proj-container devops-app:latest
