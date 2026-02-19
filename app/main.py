@@ -55,6 +55,30 @@ def get_task(task_id):
         return jsonify(error="not found"), 404
     return jsonify(task), 200
 
+
+@app.route("/tasks/<task_id>", methods=["PATCH"])
+def update_task(task_id):
+    task = TASKS.get(task_id)
+    if not task:
+        return jsonify("error=not found"), 404
+    
+    data = request.json
+    if not data or "status" not in data:
+        return jsonify(error="status required"), 400
+    
+    allowed_status = ["pending", "running", "done", "failed"]
+
+    if data["status"] not in allowed_status:
+        return jsonify(error="invalid status"), 400
+
+    old_status = task["status"]
+    task["status"] = data["status"]
+
+    app.logger.info(f"task {task_id} status {old_status} -> {task['status']}")
+
+    return jsonify(task), 200
+
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
 
